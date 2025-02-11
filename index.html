@@ -11,8 +11,8 @@
             html,
             body,
             #viewDiv{
-                padding:0;
-                margin:0;
+                padding: 0;
+                margin: 0;
                 height: 100%;
                 width: 100%;
             }
@@ -20,14 +20,14 @@
 
         <!--importing the css and libraries for esri.js-->
         <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" /> <!--references main.css style sheet, which contains styles specific to esri widgets-->
-        <script src="https://js.arcgis.com/4.26"></script> <!--loads ArcGIS Maps SDK for JavaScript-->
+        <script src="https://js.arcgis.com/4.26/"></script> <!--loads ArcGIS Maps SDK for JavaScript-->
 
         <!--loading esri modules/ widgets-->
         <script>
             require(["esri/Config", "esri/Map", "esri/views/MapView"], (esriConfig, Map, MapView) => {
                
                 //Adding in API key
-                esriConfig.apiKey = esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurKhkfX2pLTXcVWHRTuerXfKdl8xA3hB7zFxWPjRrs_PmSiHD6NMaIC5WLmBbO-NA1T2GQkQXEa7aLeqxmO48UBNlwetFemomKmm-ST0OzOE-kSn-6yb2lxnygkhJKeVk_StkyBWwjPguCGs8D_lgBidDtsIUFUo_LHpm7CSkXPjglMGjEim8xmk8TzW7-wN5Y_8QOpQ3rGbxcaq4hCiZtjzLu6JxuhL-mJjQuyHjbVLrAT1_0Sem5hOH";
+                esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurKhkfX2pLTXcVWHRTuerXfKdl8xA3hB7zFxWPjRrs_PmSiHD6NMaIC5WLmBbO-NA1T2GQkQXEa7aLeqxmO48UBNlwetFemomKmm-ST0OzOE-kSn-6yb2lxnygkhJKeVk_StkyBWwjPguCGs8D_lgBidDtsIUFUo_LHpm7CSkXPjglMGjEim8xmk8TzW7-wN5Y_8QOpQ3rGbxcaq4hCiZtjzLu6JxuhL-mJjQuyHjbVLrAT1_0Sem5hOH";
                 
                 const map = new Map({
                     basemap: "satellite"
