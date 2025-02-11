@@ -24,7 +24,7 @@
 
         <!--loading esri modules/ widgets-->
         <script>
-            require(["esri/config", "esri/Map", "esri/views/MapView"], (esriConfig, Map, MapView) => {
+            require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/Locate"], (esriConfig, Map, MapView, Locate) => {
                
                 //Adding in API key
                 esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurKhkfX2pLTXcVWHRTuerXfKdl8xA3hB7zFxWPjRrs_PmSiHD6NMaIC5WLmBbO-NA1T2GQkQXEa7aLeqxmO48UBNlwetFemomKmm-ST0OzOE-kSn-6yb2lxnygkhJKeVk_StkyBWwjPguCGs8D_lgBidDtsIUFUo_LHpm7CSkXPjglMGjEim8xmk8TzW7-wN5Y_8QOpQ3rGbxcaq4hCiZtjzLu6JxuhL-mJjQuyHjbVLrAT1_0Sem5hOH";
@@ -39,6 +39,15 @@
                     center: [-88.7879, 43.7844],
                     zoom: 6
                 });
+
+                const locateBtn = new Locate({
+                    view: view
+                }); //adding locate widget
+
+                view.ui.add(locateBtn, {
+                    position: "top-left"
+                });
+
 
             });
         </script>
