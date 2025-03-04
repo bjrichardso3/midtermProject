@@ -8,6 +8,7 @@
         <title>Pedestrian Infrastructure Concerns Midterm Project</title>
 
         <style>
+
             html,
             body,
             #viewDiv{
@@ -17,24 +18,6 @@
                 width: 100%;
             }
 
-            .addRecordBtn {
-                position: absolute;
-                z-index: 10;
-                top: 10px;
-                right: 10px;
-                background-color: #0079c1;
-                color: white;
-                padding: 8px 16px;
-                border: none;
-                border-radius: 4px;
-                font-size: 14px; 
-                cursor: pointer;
-                text-decoration: none;
-            } 
-
-            .addRecordBtn:hover {
-                background-color: #005a87;
-            }
         </style>
 
         <!--importing the css and libraries for esri.js-->
@@ -43,7 +26,7 @@
 
         <!--loading esri modules/ widgets-->
         <script>
-            require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/Locate", "esri/widgets/Search", "esri/layers/FeatureLayer"], (esriConfig, Map, MapView, Locate, Search, FeatureLayer) => {
+            require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", "esri/widgets/Locate", "esri/layers/FeatureLayer"], (esriConfig, Map, MapView, BasemapGallery, Locate, FeatureLayer) => {
                
                 //Adding in API key
                 esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurKhkfX2pLTXcVWHRTuerXfKdl8xA3hB7zFxWPjRrs_PmSiHD6NMaIC5WLmBbO-NA1T2GQkQXEa7aLeqxmO48UBNlwetFemomKmm-ST0OzOE-kSn-6yb2lxnygkhJKeVk_StkyBWwjPguCGs8D_lgBidDtsIUFUo_LHpm7CSkXPjglMGjEim8xmk8TzW7-wN5Y_8QOpQ3rGbxcaq4hCiZtjzLu6JxuhL-mJjQuyHjbVLrAT1_0Sem5hOH";
@@ -55,8 +38,16 @@
                 const view = new MapView ({
                     container: "viewDiv", //Reference to the DOM node that will contain the view
                     map: map, //References map object
-                    center: [-88.7879, 43.7844],
-                    zoom: 6
+                    center: [-88.412273, 44.236096],
+                    zoom: 10
+                });
+
+                const basemapGallery = new BasemapGallery({
+                    view: view
+                }); //Edit this so that this is minimized
+                
+                view.ui.add(basemapGallery, {
+                    position: "top-right"
                 });
 
                 const locateBtn = new Locate({
@@ -67,17 +58,8 @@
                     position: "top-left"
                 }); //adding the locate widget to the top left of the window
 
-                const search = new Search({
-                    view: view
-                }); //adding search widget
-
-                view.ui.add(search, {
-                    position: "top-left",
-                    index: 2
-                }); //adding search widget to mapview
-
                 const layer = new FeatureLayer({
-                    url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_aefdb0b68c8e4e849baf3b2764bdde3d_results/FeatureServer"
+                    url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Sidewalks_and_Paved_Trails/FeatureServer"
                 }); //creating feature layer from feature service
 
                 map.add(layer); //adding layer to map
@@ -88,7 +70,6 @@
 
     </head>
     <body>
-        <a href="https://arcg.is/0uqKH50" target="_blank" class="addRecordBtn">Add Record</a>
         
         <div id="viewDiv"></div>
     </body>
