@@ -69,7 +69,7 @@
                     "symbol": {
                         "type": "simple-line",
                         "color": "[173, 216, 230]",
-                        "width": "4px"
+                        "width": "2px"
                     }
                 } //creating symbology for sidewalks
 
@@ -86,7 +86,7 @@
                     "symbol": {
                         "type": "simple-line",
                         "color": "[144, 238, 144]",
-                        "width": "5px"
+                        "width": "3px"
                     }
                 } //creating symbology for trails
 
@@ -131,15 +131,15 @@
                 const editor = new Editor({
                     view: view,
                     layerInfos: [pointInfos]
-                });
+                }); // constructing editor widget
                 
-                view.ui.add(editor, "bottom-right");
+                view.ui.add(editor, "bottom-right"); //adding editor widget to the map frame
                 
                 const legend = new Legend({
                     view: view
-                });
+                }); // constructing legend widget
                 
-                view.ui.add(legend, "bottom-left");
+                view.ui.add(legend, "bottom-left"); //adding legend to map frame
 
             });
         </script>
