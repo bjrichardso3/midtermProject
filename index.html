@@ -98,20 +98,21 @@
 
                 map.add(trailLayer); //adding layer to map
 
-                const sidewalkConcernsRenderer = {
+                const pedestrianConcernsRenderer = {
                     "type": "simple",
                     "symbol": {
                         "type": "simple-marker",
-
+                        "size": "5px",
+                        "color": "red",
                     }
                 } //edit this renderer
 
-                const sidewalkConcernsPopup = {
-                    "title": "EDUs",
-                    "content": "<b>Name:</b> {INSTNM}<br><b>Size:</b> {INSTSIZE}<br><b>City:</b> {CITY}<br><b>State:</b> {STABBR}<br><b>Website:</b> {WEBADDR}<br>"
-                } //edit this popup template
+                const pedestrianConcernsPopup = {
+                    "title": "Pedestrian Infrastructure Concerns",
+                    "content": "<b>Category:</b> {Category}<br><b>Date Collected:</b> {CreationDate}<br><b>Comments:</b> {General_Comment}<br><b>Pictures:</b> {Attachments}<br>"
+                } //creating popup template
                 
-                const sidewalkConcernsLayer = new FeatureLayer({
+                const pedestrianConcernsLayer = new FeatureLayer({
                     url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Sidewalk_Concerns/FeatureServer",
                     outFields: ["INSTNM", "INSTSIZE"],
                     popupTemplate: sidewalkConcernsPopup
