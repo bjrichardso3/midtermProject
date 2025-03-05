@@ -16,9 +16,20 @@
                 margin: 0;
                 height: 100%;
                 width: 100%;
-            } 
+            }
+            #editorDiv {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                width: 350px;
+                height: 400px;
+                background: white;
+                border: 1px solid #ccc;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                z-index: 10;
+            }
 
-        </style> <!--Setting style-->
+        </style> <!--Setting style, used chat GPT to help with editor Div configuration as I was struggling getting the editor window to display correctly-->
 
         <!--importing the css and libraries for esri.js-->
         <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" /> <!--references main.css style sheet, which contains styles specific to esri widgets-->
@@ -144,7 +155,7 @@
                 editorDiv.id = "editorDiv";
                 view.ui.add(editorDiv, "bottom-right");
                 editor.container = editorDiv;
-                
+
                 const legend = new Legend({
                     view: view
                 }); // constructing legend widget
