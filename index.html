@@ -104,24 +104,28 @@
                         "type": "simple-marker",
                         "size": "5px",
                         "color": "red",
+                        "outline": {
+                            "width": "0.5",
+                            "color": "black"
+                        }
                     }
-                } //edit this renderer
+                } //creating symbology for pedestrian concerns layer
 
                 const pedestrianConcernsPopup = {
                     "title": "Pedestrian Infrastructure Concerns",
                     "content": "<b>Category:</b> {Category}<br><b>Date Collected:</b> {CreationDate}<br><b>Comments:</b> {General_Comment}<br><b>Pictures:</b> {Attachments}<br>"
-                } //creating popup template
+                } //creating popup template for pedestrian concerns
                 
                 const pedestrianConcernsLayer = new FeatureLayer({
                     url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Sidewalk_Concerns/FeatureServer",
-                    outFields: ["INSTNM", "INSTSIZE"],
-                    popupTemplate: sidewalkConcernsPopup
-                }); //edit the outfields portion of this layer
+                    outFields: ["Category", "CreationDate", "General_Comment", "Attachments"],
+                    popupTemplate: pedestrianConcernsPopup
+                }); // constructing the pedestrian concerns layer from ArcGIS Online Link, defining outfields and assigning popup template
 
-                map.add(sidewalkConcernLayer); //adding layer to map
+                map.add(pedestrianConcernLayer); //adding layer to map
 
                 const pointInfos = {
-                    layer: sidewalkConcernLayer
+                    layer: pedestrainConcernLayer
                 }
                 
                 const editor = new Editor({
