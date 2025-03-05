@@ -17,17 +17,6 @@
                 height: 100%;
                 width: 100%;
             }
-            #editorDiv {
-                position: absolute;
-                bottom: 20px;
-                right: 20px;
-                width: 350px;
-                height: 400px;
-                background: white;
-                border: 1px solid #ccc;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-                z-index: 10;
-            }
 
         </style> <!--Setting style, used chat GPT to help with editor Div configuration as I was struggling getting the editor window to display correctly-->
 
@@ -150,14 +139,10 @@
                             { fieldName: "Attachments", label: "Pictures", editable: true, input: { type: "attachment" } }
                         ]
                     }]
-                }); // constructing editor widget
+                });
 
+                // Add the editor widget to the view
                 view.ui.add(editor, "bottom-right");
-                
-                const editorDiv = document.createElement("div");
-                editorDiv.id = "editorDiv";
-                view.ui.add(editorDiv, "bottom-right");
-                editor.container = editorDiv;
 
                 const legend = new Legend({
                     view: view
