@@ -140,7 +140,10 @@
                     }]
                 }); // constructing editor widget
                 
-                view.ui.add(editor, "bottom-right"); //adding editor widget to the map frame
+                const editorDiv = document.createElement("div");
+                editorDiv.id = "editorDiv";
+                view.ui.add(editorDiv, "bottom-right");
+                editor.container = editorDiv;
                 
                 const legend = new Legend({
                     view: view
