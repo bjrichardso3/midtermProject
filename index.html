@@ -26,7 +26,7 @@
 
         <!--loading esri modules/ widgets-->
         <script>
-            require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", "esri/widgets/Expand", "esri/widgets/Locate", "esri/geometry/Point", "esri/symbols/SimpleMarkerSymbol", "esri/PopupTemplate", "esri/geometry/Polyline", "esri/symbols/SimpleLineSymbol", "esri/layers/FeatureLayer", "esri/renderers/SimpleRenderer", "esri/widgets/Editor", "esri/widgets/Legend"], (esriConfig, Map, MapView, BasemapGallery, Expand, Locate, Point, SimpleMarkerSymbol, PopupTemplate, Polyline, SimpleLineSymbol, FeatureLayer, SimpleRenderer, Editor, Legend) => {
+            require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", "esri/widgets/Expand", "esri/widgets/Locate", "esri/layers/FeatureLayer", "esri/widgets/Editor", "esri/widgets/Legend"], (esriConfig, Map, MapView, BasemapGallery, Expand, Locate, FeatureLayer, Editor, Legend) => {
                
                 //Adding in API key
                 esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurKhkfX2pLTXcVWHRTuerXfKdl8xA3hB7zFxWPjRrs_PmSiHD6NMaIC5WLmBbO-NA1T2GQkQXEa7aLeqxmO48UBNlwetFemomKmm-ST0OzOE-kSn-6yb2lxnygkhJKeVk_StkyBWwjPguCGs8D_lgBidDtsIUFUo_LHpm7CSkXPjglMGjEim8xmk8TzW7-wN5Y_8QOpQ3rGbxcaq4hCiZtjzLu6JxuhL-mJjQuyHjbVLrAT1_0Sem5hOH";
@@ -52,7 +52,7 @@
                     expanded: false
                 }); //allowing the user to expand and minimize the basemap gallery, starts out minimized
                 
-                view.ui.add(basemapGallery, {
+                view.ui.add(basemapExpand, {
                     position: "top-right"
                 }); //adding basemap gallery to the top right portion of the window
 
@@ -68,8 +68,8 @@
                     "type": "simple",
                     "symbol": {
                         "type": "simple-line",
-                        "color": "[173, 216, 230]",
-                        "width": "2px"
+                        "color": [173, 216, 230],
+                        "width": "1.5px"
                     }
                 } //creating symbology for sidewalks
 
@@ -85,7 +85,7 @@
                     "type": "simple",
                     "symbol": {
                         "type": "simple-line",
-                        "color": "[144, 238, 144]",
+                        "color": [144, 238, 144],
                         "width": "3px"
                     }
                 } //creating symbology for trails
@@ -119,18 +119,15 @@
                 const pedestrianConcernsLayer = new FeatureLayer({
                     url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Sidewalk_Concerns/FeatureServer",
                     outFields: ["Category", "CreationDate", "General_Comment", "Attachments"],
-                    popupTemplate: pedestrianConcernsPopup
+                    popupTemplate: pedestrianConcernsPopup,
+                    renderer: pedestrianConcernsRenderer
                 }); // constructing the pedestrian concerns layer from ArcGIS Online Link, defining outfields and assigning popup template
 
-                map.add(pedestrianConcernLayer); //adding layer to map
-
-                const pointInfos = {
-                    layer: pedestrainConcernLayer
-                }
+                map.add(pedestrianConcernsLayer); //adding layer to map
                 
                 const editor = new Editor({
                     view: view,
-                    layerInfos: [pointInfos]
+                    layerInfos: [{layer:pedestrianConcernsLayer}]
                 }); // constructing editor widget
                 
                 view.ui.add(editor, "bottom-right"); //adding editor widget to the map frame
