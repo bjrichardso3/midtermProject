@@ -1,0 +1,1 @@
+This is a midterm project which seeks to crowd source pedestrian infrastructure concerns by individuals submitting problem spots on their mobile and web based devices, largely intended for use at an individuals current location. 
