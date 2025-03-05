@@ -127,7 +127,17 @@
                 
                 const editor = new Editor({
                     view: view,
-                    layerInfos: [{layer:pedestrianConcernsLayer}]
+                    layerInfos: [{layer:pedestrianConcernsLayer,
+                        enableEditing: true,
+                        enableCreate: true,
+                        enableDelete:true,
+                        fieldInfos: [
+                            {fieldName: "Category", label: "Category", editable: true},
+                            {fieldName: "CreationDate", label: "Date Collected", editable: true},
+                            {fieldName: "General_Comment", label: "Comments", editable: true},
+                            {fieldName: "Attachments", label: "Pictures", editable: true, input: {type: "attachment"}}
+                        ]
+                    }]
                 }); // constructing editor widget
                 
                 view.ui.add(editor, "bottom-right"); //adding editor widget to the map frame
