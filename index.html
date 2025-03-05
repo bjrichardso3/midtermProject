@@ -5,7 +5,7 @@
         <meta charset="utf-8" /> <!--ensures web page can display characters from various languages and character sets-->
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" /> <!--sets view port properties-->
 
-        <title>Pedestrian Infrastructure Concerns Midterm Project</title>
+        <title>Pedestrian Infrastructure Concerns Midterm Project</title> <!--Title-->
 
         <style>
 
@@ -16,9 +16,9 @@
                 margin: 0;
                 height: 100%;
                 width: 100%;
-            }
+            } 
 
-        </style>
+        </style> <!--Setting style-->
 
         <!--importing the css and libraries for esri.js-->
         <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" /> <!--references main.css style sheet, which contains styles specific to esri widgets-->
@@ -26,29 +26,35 @@
 
         <!--loading esri modules/ widgets-->
         <script>
-            require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", "esri/widgets/Locate", "esri/layers/FeatureLayer"], (esriConfig, Map, MapView, BasemapGallery, Locate, FeatureLayer) => {
+            require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", "esri/widgets/Expand", "esri/widgets/Locate", "esri/geometry/Point", "esri/symbols/SimpleMarkerSymbol", "esri/PopupTemplate", "esri/geometry/Polyline", "esri/symbols/SimpleLineSymbol", "esri/layers/FeatureLayer", "esri/renderers/SimpleRenderer", "esri/widgets/Editor", "esri/widgets/Legend"], (esriConfig, Map, MapView, BasemapGallery, Expand, Locate, Point, SimpleMarkerSymbol, PopupTemplate, Polyline, SimpleLineSymbol, FeatureLayer, SimpleRenderer, Editor, Legend) => {
                
                 //Adding in API key
                 esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurKhkfX2pLTXcVWHRTuerXfKdl8xA3hB7zFxWPjRrs_PmSiHD6NMaIC5WLmBbO-NA1T2GQkQXEa7aLeqxmO48UBNlwetFemomKmm-ST0OzOE-kSn-6yb2lxnygkhJKeVk_StkyBWwjPguCGs8D_lgBidDtsIUFUo_LHpm7CSkXPjglMGjEim8xmk8TzW7-wN5Y_8QOpQ3rGbxcaq4hCiZtjzLu6JxuhL-mJjQuyHjbVLrAT1_0Sem5hOH";
                 
                 const map = new Map({
                     basemap: "satellite"
-                });
+                }); //default basemap as satellite
 
                 const view = new MapView ({
                     container: "viewDiv", //Reference to the DOM node that will contain the view
                     map: map, //References map object
                     center: [-88.412273, 44.236096],
-                    zoom: 10
-                });
+                    zoom: 12
+                }); //sets default location and extent
 
                 const basemapGallery = new BasemapGallery({
                     view: view
-                }); //Edit this so that this is minimized
+                }); //adding selectable basemap options
+
+                const basemapExpand = new Expand({
+                    view: view,
+                    content: basemapGallery,
+                    expanded: false
+                }); //allowing the user to expand and minimize the basemap gallery, starts out minimized
                 
                 view.ui.add(basemapGallery, {
                     position: "top-right"
-                });
+                }); //adding basemap gallery to the top right portion of the window
 
                 const locateBtn = new Locate({
                     view: view
@@ -58,12 +64,77 @@
                     position: "top-left"
                 }); //adding the locate widget to the top left of the window
 
-                const layer = new FeatureLayer({
-                    url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Sidewalks_and_Paved_Trails/FeatureServer"
-                }); //creating feature layer from feature service
+                const sidewalkRenderer = {
+                    "type": "simple",
+                    "symbol": {
+                        "type": "simple-line",
+                        "color": "[173, 216, 230]",
+                        "width": "4px"
+                    }
+                } //creating symbology for sidewalks
 
-                map.add(layer); //adding layer to map
+                const sidewalkLayer = new FeatureLayer({
+                    url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Sidewalks_and_Paved_Trails/FeatureServer",
+                    renderer: sidewalkRenderer,
+                    definitionExpression: "Type = 'Sidewalk'",
+                }); //creating feature layer from feature service.
 
+                map.add(sidewalkLayer); //adding layer to map
+
+                const trailRenderer = {
+                    "type": "simple",
+                    "symbol": {
+                        "type": "simple-line",
+                        "color": "[144, 238, 144]",
+                        "width": "5px"
+                    }
+                } //creating symbology for trails
+
+                const trailLayer = new FeatureLayer({
+                    url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Sidewalks_and_Paved_Trails/FeatureServer",
+                    renderer: trailRenderer,
+                    definitionExpression: "Type = 'Off Road Paved'",
+                }); //creating feature layer from feature service.
+
+                map.add(trailLayer); //adding layer to map
+
+                const sidewalkConcernsRenderer = {
+                    "type": "simple",
+                    "symbol": {
+                        "type": "simple-marker",
+
+                    }
+                } //edit this renderer
+
+                const sidewalkConcernsPopup = {
+                    "title": "EDUs",
+                    "content": "<b>Name:</b> {INSTNM}<br><b>Size:</b> {INSTSIZE}<br><b>City:</b> {CITY}<br><b>State:</b> {STABBR}<br><b>Website:</b> {WEBADDR}<br>"
+                } //edit this popup template
+                
+                const sidewalkConcernsLayer = new FeatureLayer({
+                    url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Sidewalk_Concerns/FeatureServer",
+                    outFields: ["INSTNM", "INSTSIZE"],
+                    popupTemplate: sidewalkConcernsPopup
+                }); //edit the outfields portion of this layer
+
+                map.add(sidewalkConcernLayer); //adding layer to map
+
+                const pointInfos = {
+                    layer: sidewalkConcernLayer
+                }
+                
+                const editor = new Editor({
+                    view: view,
+                    layerInfos: [pointInfos]
+                });
+                
+                view.ui.add(editor, "bottom-right");
+                
+                const legend = new Legend({
+                    view: view
+                });
+                
+                view.ui.add(legend, "bottom-left");
 
             });
         </script>
@@ -72,5 +143,6 @@
     <body>
         
         <div id="viewDiv"></div>
+
     </body>
 </html>
